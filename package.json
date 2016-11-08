@@ -1,0 +1,33 @@
+{
+  "name": "monarch-firebase-custom-auth",
+  "version": "1.0.0",
+  "description": "https://firebase.google.com/docs/auth/web/custom-auth",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run test-credentials",
+    "set-credentials": "node scripts/credentials.js --set-credentials",
+    "test-credentials": "node scripts/credentials.js --test-credentials",
+    "demo": "node scripts/demo.js ",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/transmute-industries/monarch-firebase-custom-auth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/transmute-industries/monarch-firebase-custom-auth/issues"
+  },
+  "homepage": "https://github.com/transmute-industries/monarch-firebase-custom-auth#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "ethereumjs-util": "^5.0.0",
+    "firebase": "^3.5.2",
+    "ipfs": "^0.17.0",
+    "ipfs-api": "git+https://github.com/haadcode/js-ipfs-api.git",
+    "prompt": "^1.0.0",
+    "web3": "^0.17.0-beta"
+  }
+}
