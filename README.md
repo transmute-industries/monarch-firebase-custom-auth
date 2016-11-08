@@ -1,13 +1,31 @@
 # A Firebase Custom Auth Example
 
-https://github.com/ipfs/js-ipfs-api
 
-https://firebase.google.com/docs/auth/web/custom-auth
+# Getting Started
 
-https://firebase.google.com/docs/auth/server/create-custom-tokens
+Install and Start dependencies:
 
-# Proof Of Concept
+```
 
+npm install -g testrpc
+
+# In a new terminal window
+
+$ testrpc
+
+```
+
+Clone and install the repo:
+
+```
+$ git clone git@github.com:transmute-industries/monarch-firebase-custom-auth.git
+$ cd monarch-firebase-custom-auth;
+$ npm install
+$ npm run start
+
+```
+
+# How It Works
 
 A web3 client with access to an account_address's private key generates a signature.
 
@@ -89,3 +107,9 @@ firebase.auth().signInWithCustomToken(token).catch(function(error) {
   // ...
 });
 ```
+
+# Extended Reading
+
+https://firebase.google.com/docs/auth/web/custom-auth
+
+https://firebase.google.com/docs/auth/server/create-custom-tokens
