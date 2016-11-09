@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Monarch Firebase Custom Auth</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo"><i class="material-icons">cloud</i>Eth Wallet</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/wallet"><i class="material-icons">view_module</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="row" id="loggedOut">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image">
+                    <img src="images/logged_out.png">
+                    <span class="card-title" id="account_address"></span>
+                </div>
+                <div class="card-content">
+                    <p>Your have an active web3 instance running!</p>
+
+                </div>
+                <div class="card-action">
+                    <a onclick="login()" href="#">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="loggedIn">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image">
+                    <img src="images/logged_in.png">
+                    <span class="card-title" id="firebase_uid"></span>
+                </div>
+                <div class="card-content">
+                    <p>You are currently logged in with a firbase token generated from a browser based ethereum wallet!</p>
+
+                </div>
+                <div class="card-action">
+                    <a onclick="logout()" href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDIXrTv0TD9zdaCy5n_QXm6_VMaS-1B3sQ",
+        authDomain: "transmute-industries.firebaseapp.com",
+        databaseURL: "https://transmute-industries.firebaseio.com",
+        storageBucket: "transmute-industries.appspot.com",
+        messagingSenderId: "1068223304219"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src="/lib/web3.js"></script>
+    <script src="/js/token.js"></script>
+
+</body>
+
+</html>

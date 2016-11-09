@@ -19,7 +19,7 @@ Clone and install the repo:
 
 ```
 $ git clone git@github.com:transmute-industries/monarch-firebase-custom-auth.git
-$ cd monarch-firebase-custom-auth;
+$ cd monarch-firebase-custom-auth
 $ npm install
 $ npm run start
 

@@ -1,0 +1,287 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Monarch Firebase Custom Auth</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+
+</head>
+
+<body>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDIXrTv0TD9zdaCy5n_QXm6_VMaS-1B3sQ",
+        authDomain: "transmute-industries.firebaseapp.com",
+        databaseURL: "https://transmute-industries.firebaseio.com",
+        storageBucket: "transmute-industries.appspot.com",
+        messagingSenderId: "1068223304219"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+
+    <script src="/lib/lightwallet.min.js"></script>
+    <script type="text/javascript" src="/lib/web3.js"></script>
+    <script type="text/javascript" src="/lib/hooked-web3-provider.js"></script>
+    <script type="text/javascript" src="/lib/async.js"></script>
+
+    <script type="text/javascript" src="/js/wallet.js"></script>
+
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo"><i class="material-icons">cloud</i>Eth Wallet</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/wallet"><i class="material-icons">view_module</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col s12 m12">
+
+
+            <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>New Wallet</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="userEntropy" type="text" class="validate" placeholder="Type random text to generate entropy">
+                                        <label for="userEntropy">Entropy</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <a onclick="newWallet()" class="waves-effect waves-light btn">Create Wallet</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">place</i>Restore Wallet</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="seed" type="text" class="validate" placeholder="sunny near supply extend hood client reveal goddess human rookie river butter">
+                                        <label for="seed">Wallet Seed</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <a onclick="setSeed()" class="waves-effect waves-light btn">Restore wallet from Seed</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Show Addresses</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="numAddr" type="text" class="validate" placeholder="2">
+                                        <label for="numAddr">Number Addresses</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <a onclick="newAddresses('')" class="waves-effect waves-light btn">New Addresses</a>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <div id="addr"></div>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <a onclick="getBalances()" class="waves-effect waves-light btn">Refresh</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Send Ether</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input type="text" size="40" id="sendFrom"></input>
+                                        <label for="sendFrom">From</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input type="text" size="40" id="sendTo"></input>
+                                        <label for="sendTo">To</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">local_offer</i>
+                                        <input type="text" size="40" id="sendValueAmount"></input>
+                                        <label for="sendValueAmount">Ammount</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <a onclick="sendEth()" class="waves-effect waves-light btn">Send Eth</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Show Seed</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <a onclick="showSeed()" class="waves-effect waves-light btn">Show Seed</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Call Contract</div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input type="text" size="40" id="functionCaller"></input>
+                                        <label for="functionCaller">Caller</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">code</i>
+                                        <input type="text" size="40" id="contractAddr"></input>
+                                        <label for="contractAddr">Contract Addresses</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">code</i>
+                                        <input type="text" size="40" id="functionName"></input>
+                                        <label for="functionName">Function Name</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">code</i>
+                                        <input type="text" size="40" id="functionArgs"></input>
+                                        <label for="functionArgs">Function Args</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">code</i>
+                                        <input type="text" size="40" id="sendValueAmount"></input>
+                                        <label for="sendValueAmount">Value (Ether):</label>
+                                    </div>
+
+                                    <div class="input-field col s6">
+                                        <a onclick="functionCall()" class="waves-effect waves-light btn">Call Function</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+
+                 <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Sign Transaction </div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <a onclick="signTransaction()" class="waves-effect waves-light btn">Sign</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+
+                  <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Get Firebase Token </div>
+                    <div class="collapsible-body">
+                        <div class="row" style="padding-top: 32px;">
+                            <form class="col s12">
+                                <div class="row">
+
+                                    <div class="input-field col s6">
+                                        <a onclick="getTokenFromSignature()" class="waves-effect waves-light btn">Sign</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+
+            </ul>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
